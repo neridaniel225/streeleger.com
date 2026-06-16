@@ -16,6 +16,30 @@ input,select,textarea{font-family:inherit;font-size:.82rem;border:1px solid var(
 input:focus,select:focus{border-color:var(--k)}
 label{font-size:.58rem;font-weight:700;text-transform:uppercase;letter-spacing:.16em;color:var(--g5);display:block;margin-bottom:5px}
 .fg{display:flex;flex-direction:column}
+/* ── MODERN FORM ── */
+.mf-wrap{background:#0d0d0d;padding:3rem;position:relative}
+.mf-wrap::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--red),transparent)}
+.mf-field{position:relative;margin-bottom:1.2rem}
+.mf-input{width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.15);color:#fff;font-size:.84rem;font-family:inherit;padding:1.1rem 1rem .5rem;outline:none;transition:all .25s;border-radius:2px}
+.mf-input:focus{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.08);border-bottom-color:var(--red);box-shadow:0 1px 0 0 var(--red)}
+.mf-input::placeholder{color:transparent}
+.mf-label{position:absolute;left:1rem;top:50%;transform:translateY(-50%);font-size:.58rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.28);pointer-events:none;transition:all .22s}
+.mf-input:focus ~ .mf-label,.mf-input:not(:placeholder-shown) ~ .mf-label{top:.52rem;transform:none;font-size:.46rem;letter-spacing:.2em;color:var(--red)}
+textarea.mf-input{padding-top:1.3rem;resize:vertical;min-height:120px}
+textarea.mf-input ~ .mf-label{top:1.1rem;transform:none}
+textarea.mf-input:focus ~ .mf-label,textarea.mf-input:not(:placeholder-shown) ~ .mf-label{top:.5rem;font-size:.46rem;color:var(--red)}
+select.mf-input{padding-top:1.1rem;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='rgba(255,255,255,.3)'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 1rem center}
+select.mf-input option{background:#111;color:#fff}
+.mf-tab{flex:1;padding:1rem .6rem;background:transparent;border:none;border-bottom:2px solid transparent;color:rgba(255,255,255,.28);font-size:.52rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:all .22s;text-align:center;line-height:1.5}
+.mf-tab.on{border-bottom-color:var(--red);color:#fff}
+.mf-tab:hover:not(.on){color:rgba(255,255,255,.6);border-bottom-color:rgba(255,255,255,.15)}
+.mf-submit{width:100%;padding:16px;background:var(--red);color:#fff;font-family:'Barlow';font-size:.64rem;font-weight:800;letter-spacing:.24em;text-transform:uppercase;border:none;cursor:pointer;position:relative;overflow:hidden;transition:all .3s;margin-top:.5rem}
+.mf-submit::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.08) 0%,transparent 50%)}
+.mf-submit:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(204,17,17,.4)}
+.mf-submit:active{transform:translateY(0)}
+.mf-divider{height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.08),transparent);margin:1.2rem 0}
+.mf-grid2{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
+@media(max-width:540px){.mf-grid2{grid-template-columns:1fr}}
 .si{max-width:1440px;margin:0 auto;padding:0 2rem}
 
 /* TICKER */
@@ -351,6 +375,9 @@ label{font-size:.58rem;font-weight:700;text-transform:uppercase;letter-spacing:.
   .cko-grid{grid-template-columns:1fr 1fr}
   .pay-icons-grid{grid-template-columns:repeat(3,1fr)}
 }
+@keyframes cpKb{0%{transform:scale(1) translateX(0)} 100%{transform:scale(1.08) translateX(-2%)}}
+@keyframes cpFadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+.cp-tag{display:inline-block;font-size:.5rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding:4px 10px;background:var(--w2);border:1px solid var(--w3);color:var(--g5)}
 @media(max-width:640px){
   .si{padding:0 1.2rem}
   .prod-grid{grid-template-columns:repeat(2,1fr)}
@@ -1110,7 +1137,7 @@ label{font-size:.58rem;font-weight:700;text-transform:uppercase;letter-spacing:.
           <img src="https://images.unsplash.com/photo-1556821840-3a63f15732ce?w=200&q=80" alt="" style="width:100%;aspect-ratio:1;object-fit:cover"/>
           <img src="https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=200&q=80" alt="" style="width:100%;aspect-ratio:1;object-fit:cover"/>
         </div>
-        <button onclick="showCat('homme')" class="btn-red" style="width:100%;justify-content:center;font-size:.6rem;padding:10px">Voir la Capsule Harmattan →</button>
+        <button onclick="openCreator('konan')" class="btn-red" style="width:100%;justify-content:center;font-size:.6rem;padding:10px">Voir la Capsule Harmattan →</button>
       </div>
       <!-- Creator 2 -->
       <div style="background:var(--w);padding:2rem">
@@ -1127,7 +1154,7 @@ label{font-size:.58rem;font-weight:700;text-transform:uppercase;letter-spacing:.
           <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=200&q=80" alt="" style="width:100%;aspect-ratio:1;object-fit:cover;filter:grayscale(30%)"/>
           <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=200&q=80" alt="" style="width:100%;aspect-ratio:1;object-fit:cover;filter:grayscale(30%)"/>
         </div>
-        <button style="width:100%;padding:10px;font-size:.6rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;background:transparent;border:1.5px solid var(--w3);color:var(--g5);cursor:pointer">Être notifié du Drop →</button>
+        <button onclick="openCreator('yasmine')" style="width:100%;padding:10px;font-size:.6rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;background:transparent;border:1.5px solid var(--w3);color:var(--g5);cursor:pointer">Voir la Capsule Rebirth →</button>
       </div>
       <!-- Creator 3 -->
       <div style="background:var(--w);padding:2rem">
@@ -1144,7 +1171,7 @@ label{font-size:.58rem;font-weight:700;text-transform:uppercase;letter-spacing:.
           <img src="https://images.unsplash.com/photo-1578587018452-892bacefd3f2?w=200&q=80" alt="" style="width:100%;aspect-ratio:1;object-fit:cover;filter:sepia(20%)"/>
           <img src="https://images.unsplash.com/photo-1618354691373-d851c5c3a990?w=200&q=80" alt="" style="width:100%;aspect-ratio:1;object-fit:cover;filter:sepia(20%)"/>
         </div>
-        <button onclick="showCat('acc')" class="btn-outline" style="width:100%;justify-content:center;font-size:.6rem;padding:10px">Voir les Pièces Collector →</button>
+        <button onclick="openCreator('djamel')" class="btn-outline" style="width:100%;justify-content:center;font-size:.6rem;padding:10px">Voir les Pièces Collector →</button>
       </div>
     </div>
     <!-- CTA Collaborate -->
@@ -1157,106 +1184,346 @@ label{font-size:.58rem;font-weight:700;text-transform:uppercase;letter-spacing:.
   </div>
 </div>
 
+<!-- ========== PAGE CRÉATEUR PROFIL ========== -->
+<div class="page" id="page-creator-profile">
+
+  <!-- ░░ HERO CINÉMATIQUE ░░ -->
+  <div style="position:relative;overflow:hidden;height:100svh;min-height:520px;max-height:860px;background:#000">
+    <!-- Ken Burns image -->
+    <img id="cpBanner" src="" alt="" style="position:absolute;inset:-5%;width:110%;height:110%;object-fit:cover;object-position:center 25%;opacity:0;display:block;transition:opacity 1.4s ease;animation:cpKb 18s ease-in-out infinite alternate"/>
+    <!-- Overlays -->
+    <div style="position:absolute;inset:0;background:linear-gradient(160deg,rgba(0,0,0,.08) 0%,transparent 45%)"></div>
+    <div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 40%,rgba(0,0,0,.96) 100%)"></div>
+    <div style="position:absolute;inset:0;background:linear-gradient(to right,rgba(0,0,0,.55) 0%,transparent 55%)"></div>
+    <!-- Grain texture overlay -->
+    <div style="position:absolute;inset:0;opacity:.03;background-image:url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22200%22><filter id=%22n%22><feTurbulence type=%22fractalNoise%22 baseFrequency=%220.9%22 numOctaves=%224%22/><feColorMatrix type=%22saturate%22 values=%220%22/></filter><rect width=%22200%22 height=%22200%22 filter=%22url(%23n)%22/></svg>');background-size:200px"></div>
+
+    <!-- Nav retour -->
+    <div style="position:absolute;top:0;left:0;right:0;z-index:20;padding:1.2rem">
+      <div class="si" style="display:flex;align-items:center;justify-content:space-between">
+        <button onclick="nav('creators')" style="background:rgba(255,255,255,.06);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.7);padding:8px 18px;font-size:.52rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:7px" onmouseover="this.style.background='rgba(255,255,255,.12)'" onmouseout="this.style.background='rgba(255,255,255,.06)'">‹ Créateurs</button>
+        <div id="cpStatusHero"></div>
+      </div>
+    </div>
+
+    <!-- Contenu principal centré bas -->
+    <div class="si" style="position:absolute;bottom:0;left:0;right:0;padding:0 0 3.5rem">
+
+      <!-- Tag capsule -->
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:1.1rem">
+        <div style="width:32px;height:1px;background:var(--red)"></div>
+        <span id="cpCapsuleTagHero" style="font-size:.5rem;font-weight:700;letter-spacing:.32em;text-transform:uppercase;color:rgba(255,255,255,.4)"></span>
+      </div>
+
+      <!-- Nom créateur — très grand -->
+      <h1 id="cpName" style="font-family:'Barlow Condensed',sans-serif;font-size:clamp(4rem,12vw,9.5rem);font-weight:900;color:var(--w);text-transform:uppercase;letter-spacing:.01em;line-height:.8;margin-bottom:1rem;text-shadow:0 2px 40px rgba(0,0,0,.4)"></h1>
+
+      <!-- Discipline + séparateur rouge -->
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:2rem">
+        <div id="cpStyle" style="font-size:.6rem;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:rgba(255,255,255,.35)"></div>
+        <div style="width:6px;height:6px;background:var(--red);border-radius:50%"></div>
+        <div id="cpVille" style="font-size:.6rem;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:rgba(255,255,255,.22)"></div>
+      </div>
+
+      <!-- Stats bar + CTA -->
+      <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:2rem;flex-wrap:wrap">
+        <div id="cpStatItems" style="display:flex;gap:2.5rem;align-items:flex-end"></div>
+        <div style="display:flex;gap:.6rem">
+          <button onclick="document.getElementById('cpContent').scrollIntoView({behavior:'smooth'})" style="background:var(--red);color:var(--w);border:none;padding:13px 30px;font-family:'Barlow';font-size:.62rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;cursor:pointer;transition:opacity .2s" onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">Voir la Capsule ↓</button>
+          <button id="cpWishCreator" onclick="wishCreator()" style="width:46px;height:46px;background:rgba(255,255,255,.08);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.15);color:var(--w);cursor:pointer;font-size:1rem;transition:all .2s">♥</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ░░ BIO + CAPSULE INFO ░░ -->
+  <div id="cpContent" style="background:var(--w)">
+    <div class="si" style="padding:4rem 0">
+
+      <!-- Eyebrow -->
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:2.5rem">
+        <div style="width:28px;height:2px;background:var(--red)"></div>
+        <span style="font-size:.5rem;font-weight:700;letter-spacing:.32em;text-transform:uppercase;color:var(--red)">Profil</span>
+      </div>
+
+      <!-- Layout 3 colonnes : bio | div | capsule + galerie -->
+      <div style="display:grid;grid-template-columns:5fr 1px 4fr;gap:3.5rem;align-items:start">
+
+        <!-- BIO -->
+        <div>
+          <h2 id="cpNameBio" style="font-family:'Barlow Condensed',sans-serif;font-size:clamp(2.2rem,5vw,3.8rem);font-weight:900;text-transform:uppercase;letter-spacing:.03em;line-height:.88;margin-bottom:1.4rem;color:var(--k)"></h2>
+          <p id="cpBio" style="font-size:.8rem;line-height:2.1;color:#444;margin-bottom:1.8rem"></p>
+
+          <!-- Tags du créateur -->
+          <div id="cpTags" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1.8rem"></div>
+
+          <!-- Citation du créateur (blockquote stylé) -->
+          <div id="cpQuoteBlock" style="border-left:3px solid var(--red);padding:.8rem 0 .8rem 1.2rem;margin-bottom:0">
+            <div style="font-size:.48rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--red);margin-bottom:.4rem">Citation</div>
+            <blockquote id="cpQuote" style="font-family:'Barlow Condensed',sans-serif;font-size:1.3rem;font-weight:700;color:var(--k);line-height:1.4;margin:0;font-style:italic"></blockquote>
+          </div>
+        </div>
+
+        <!-- Séparateur vertical -->
+        <div style="background:var(--w3);align-self:stretch"></div>
+
+        <!-- CAPSULE INFO -->
+        <div>
+          <div style="font-size:.48rem;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--g5);margin-bottom:.5rem">Capsule Exclusive</div>
+          <div id="cpCapsuleName" style="font-family:'Barlow Condensed',sans-serif;font-size:2.6rem;font-weight:900;text-transform:uppercase;letter-spacing:.03em;line-height:.88;color:var(--k);margin-bottom:.5rem"></div>
+          <div id="cpCapsuleLabel" style="font-size:.54rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--g5);margin-bottom:1.2rem"></div>
+          <div id="cpCapsuleBadge" style="margin-bottom:1.4rem"></div>
+
+          <!-- Galerie preview 2×2 -->
+          <div id="cpPreviewImgs" style="display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:3px;aspect-ratio:1;margin-bottom:1.2rem;overflow:hidden"></div>
+
+          <!-- Mini stats capsule -->
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--w3)">
+            <div style="background:var(--w2);padding:.9rem">
+              <div id="cpPieceCountSmall" style="font-family:'Barlow Condensed',sans-serif;font-size:2rem;font-weight:900;color:var(--k);line-height:1"></div>
+              <div style="font-size:.5rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--g5)">Pièces</div>
+            </div>
+            <div id="cpSeasonStat" style="background:var(--k);padding:.9rem">
+              <div style="font-family:'Barlow Condensed',sans-serif;font-size:2rem;font-weight:900;color:var(--w);line-height:1" id="cpSeasonVal"></div>
+              <div style="font-size:.5rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.35)">Saison</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ░░ MARQUEE CRÉATEUR ░░ -->
+  <div style="background:var(--k);overflow:hidden;padding:.7rem 0;border-top:1px solid rgba(255,255,255,.04)">
+    <div style="display:flex;animation:mq 24s linear infinite;white-space:nowrap;width:max-content" id="cpMarquee"></div>
+  </div>
+
+  <!-- ░░ CAPSULE SECTION ░░ -->
+  <div style="background:var(--k);padding:3rem 0 0">
+    <div class="si" style="display:flex;align-items:flex-end;justify-content:space-between;gap:1rem;padding-bottom:1.8rem;border-bottom:1px solid rgba(255,255,255,.07);flex-wrap:wrap">
+      <div>
+        <div style="font-size:.48rem;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:rgba(255,255,255,.2);margin-bottom:.4rem">Collection Exclusive</div>
+        <div id="cpCapsuleTitle2" style="font-family:'Barlow Condensed',sans-serif;font-size:clamp(2.5rem,6vw,5rem);font-weight:900;color:var(--w);text-transform:uppercase;letter-spacing:.03em;line-height:.88"></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:1.5rem">
+        <div id="cpPieceCount" style="font-family:'Barlow Condensed',sans-serif;font-size:5rem;font-weight:900;color:rgba(255,255,255,.05);line-height:1;letter-spacing:-.04em"></div>
+      </div>
+    </div>
+    <!-- Products on dark bg -->
+    <div style="padding:2rem 0">
+      <div class="si">
+        <div class="prod-grid" id="cpProdGrid" style="--pc-bg:#111;--pc-name:#fff;--pc-price:#e0e0e0"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ░░ GALERIE HORIZONTALE SCROLLABLE ░░ -->
+  <div style="background:var(--k);padding:0 0 3rem">
+    <div style="overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch">
+      <div id="cpScrollGallery" style="display:flex;gap:3px;padding:0 max(1.5rem,calc((100vw - 1200px)/2));width:max-content"></div>
+    </div>
+  </div>
+
+  <!-- ░░ AUSSI DISPONIBLE ░░ -->
+  <div style="background:var(--w2);border-top:1px solid var(--w3);padding:3rem 0">
+    <div class="si">
+      <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:1.6rem;flex-wrap:wrap;gap:.5rem">
+        <div>
+          <div style="font-size:.48rem;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:var(--g5);margin-bottom:.3rem">Complete the Look</div>
+          <div id="cpAlsoCat" style="font-family:'Barlow Condensed',sans-serif;font-size:2rem;font-weight:900;text-transform:uppercase;letter-spacing:.04em;color:var(--k)"></div>
+        </div>
+        <button id="cpAlsoBtn" class="btn-outline" style="font-size:.56rem;padding:9px 20px">Voir tout →</button>
+      </div>
+      <div class="prod-grid" id="cpAlsoGrid"></div>
+    </div>
+  </div>
+
+  <!-- ░░ CTA COLLABORATE ░░ -->
+  <div style="background:var(--k);padding:4rem 0;position:relative;overflow:hidden">
+    <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 20% 50%,rgba(204,17,17,.15) 0%,transparent 65%)"></div>
+    <div class="si" style="position:relative;z-index:2;display:grid;grid-template-columns:1fr auto;gap:3rem;align-items:center">
+      <div>
+        <div style="font-size:.5rem;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--red);margin-bottom:.6rem">Rejoins le Spotlight</div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:clamp(2rem,5vw,4rem);font-weight:900;color:var(--w);text-transform:uppercase;letter-spacing:.03em;line-height:.88;margin-bottom:.8rem">Tu crées.<br/>On amplifie.</div>
+        <p style="font-size:.74rem;color:rgba(255,255,255,.3);line-height:1.8;max-width:400px">Soumets ton portfolio. Si ta vision colle à l'ADN Street Léger, on co-crée une capsule exclusive portant ta signature.</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:.6rem;align-items:flex-end">
+        <a href="https://wa.me/2250700000000?text=Bonjour%2C+je+suis+créateur+et+j'aimerais+collaborer+avec+Street+Léger" target="_blank" style="background:var(--red);color:var(--w);padding:14px 32px;font-size:.62rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;display:inline-block;transition:opacity .2s" onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'" onclick="event.preventDefault();nav('membres');setTimeout(()=>{setType('createur');document.getElementById('membreForm').scrollIntoView({behavior:'smooth'})},300)">Soumettre mon portfolio →</a>
+        <button onclick="nav('membres')" style="background:transparent;border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.45);padding:10px 28px;font-size:.56rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;white-space:nowrap">Voir le Club Membres</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
 <!-- ========== PAGE MEMBRES ========== -->
 <div class="page" id="page-membres">
-  <!-- Hero -->
-  <div style="background:var(--k);min-height:50vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:4rem 2rem;position:relative;overflow:hidden">
-    <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 60% 40%,rgba(204,17,17,.12) 0%,transparent 70%)"></div>
-    <div style="position:relative;z-index:2">
-      <div style="font-size:.52rem;font-weight:700;letter-spacing:.4em;text-transform:uppercase;color:var(--red);margin-bottom:.8rem">Partenariats & Collaborations</div>
-      <h1 style="font-family:'Barlow Condensed',sans-serif;font-size:clamp(3rem,9vw,6.5rem);font-weight:900;color:var(--w);letter-spacing:.03em;text-transform:uppercase;line-height:.86;margin-bottom:1rem">CLUB<br/>MEMBRES</h1>
-      <p style="font-size:.8rem;color:rgba(255,255,255,.38);max-width:500px;margin:0 auto 2rem;line-height:1.9">Rejoins l'écosystème Street Léger. Accès exclusifs, réductions permanentes, invitations aux drops privés et opportunités de collaboration pour marques et influenceurs.</p>
-      <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
-        <button onclick="document.getElementById('membreForm').scrollIntoView({behavior:'smooth'})" class="btn-red">Devenir Membre →</button>
-        <button onclick="document.getElementById('partenairesSection').scrollIntoView({behavior:'smooth'})" class="btn-ghost">Partenariat Marque</button>
+
+  <!-- HERO -->
+  <div style="background:var(--k);min-height:55vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:5rem 2rem;position:relative;overflow:hidden">
+    <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 30% 60%,rgba(204,17,17,.14) 0%,transparent 65%)"></div>
+    <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 80% 30%,rgba(204,17,17,.07) 0%,transparent 55%)"></div>
+    <div style="position:relative;z-index:2;max-width:680px">
+      <div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:1rem">
+        <div style="width:28px;height:1px;background:var(--red)"></div>
+        <span style="font-size:.5rem;font-weight:700;letter-spacing:.36em;text-transform:uppercase;color:var(--red)">Écosystème Street Léger</span>
+        <div style="width:28px;height:1px;background:var(--red)"></div>
+      </div>
+      <h1 style="font-family:'Barlow Condensed',sans-serif;font-size:clamp(3.5rem,10vw,7.5rem);font-weight:900;color:var(--w);letter-spacing:.02em;text-transform:uppercase;line-height:.82;margin-bottom:1.2rem">CLUB<br/><span style="color:var(--red)">MEMBRES</span></h1>
+      <p style="font-size:.8rem;color:rgba(255,255,255,.35);max-width:480px;margin:0 auto 2.2rem;line-height:2">Accès exclusifs aux drops, invitations aux événements, collaborations et partenariats. Un seul formulaire pour toutes les demandes.</p>
+      <div style="display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap">
+        <button onclick="document.getElementById('membreForm').scrollIntoView({behavior:'smooth'})" class="btn-red" style="padding:13px 32px">Rejoindre le Club →</button>
+        <button onclick="document.getElementById('membreForm').scrollIntoView({behavior:'smooth'});document.getElementById('typeSelect').value='partenariat';updateFormFields()" class="btn-ghost">Partenariat Marque</button>
       </div>
     </div>
   </div>
-  <!-- Benefits -->
-  <div style="background:var(--w2);padding:3rem 0;border-bottom:1px solid var(--w3)">
+
+  <!-- AVANTAGES : 3 colonnes simples, sans -15% -->
+  <div style="background:var(--w2);border-bottom:1px solid var(--w3);padding:2.8rem 0">
     <div class="si">
-      <div style="text-align:center;margin-bottom:2.5rem">
-        <div style="font-family:'Barlow Condensed',sans-serif;font-size:2rem;font-weight:900;text-transform:uppercase;letter-spacing:.04em">Les Avantages Membres</div>
-      </div>
-      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1.5rem">
-        <div style="background:var(--w);padding:1.5rem;border-left:3px solid var(--red)">
-          <div style="font-size:1.4rem;margin-bottom:.6rem">🏷️</div>
-          <div style="font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;margin-bottom:.4rem">-15% Permanent</div>
-          <div style="font-size:.68rem;color:var(--g5);line-height:1.7">Réduction exclusive sur tous les articles, toute l'année, sans condition.</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--w3)">
+        <div style="background:var(--w);padding:1.6rem 1.4rem">
+          <div style="font-size:1.3rem;margin-bottom:.7rem">⚡</div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;font-weight:900;text-transform:uppercase;letter-spacing:.06em;margin-bottom:.4rem">Drops en avant-première</div>
+          <div style="font-size:.68rem;color:var(--g5);line-height:1.8">Accès 24h avant le public. Quantités limitées réservées aux membres.</div>
         </div>
-        <div style="background:var(--w);padding:1.5rem;border-left:3px solid var(--red)">
-          <div style="font-size:1.4rem;margin-bottom:.6rem">⚡</div>
-          <div style="font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;margin-bottom:.4rem">Accès Drops -24h</div>
-          <div style="font-size:.68rem;color:var(--g5);line-height:1.7">Tu reçois les drops 24h avant tout le monde. Quantités limitées garanties.</div>
+        <div style="background:var(--w);padding:1.6rem 1.4rem;border-left:3px solid var(--red)">
+          <div style="font-size:1.3rem;margin-bottom:.7rem">🤝</div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;font-weight:900;text-transform:uppercase;letter-spacing:.06em;margin-bottom:.4rem">Réseau Créateurs</div>
+          <div style="font-size:.68rem;color:var(--g5);line-height:1.8">Intègre la communauté de créateurs, designers et entrepreneurs qui font bouger Abidjan.</div>
         </div>
-        <div style="background:var(--w);padding:1.5rem;border-left:3px solid var(--red)">
-          <div style="font-size:1.4rem;margin-bottom:.6rem">🎁</div>
-          <div style="font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;margin-bottom:.4rem">Cadeaux Exclusifs</div>
-          <div style="font-size:.68rem;color:var(--g5);line-height:1.7">Pièces collector et éditions limitées offertes aux membres actifs chaque saison.</div>
-        </div>
-        <div style="background:var(--w);padding:1.5rem;border-left:3px solid var(--red)">
-          <div style="font-size:1.4rem;margin-bottom:.6rem">🤝</div>
-          <div style="font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;margin-bottom:.4rem">Réseau Créateurs</div>
-          <div style="font-size:.68rem;color:var(--g5);line-height:1.7">Intègre un réseau de créateurs, designers et entrepreneurs qui font bouger Abidjan.</div>
+        <div style="background:var(--w);padding:1.6rem 1.4rem">
+          <div style="font-size:1.3rem;margin-bottom:.7rem">🎁</div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;font-weight:900;text-transform:uppercase;letter-spacing:.06em;margin-bottom:.4rem">Cadeaux & Exclusivités</div>
+          <div style="font-size:.68rem;color:var(--g5);line-height:1.8">Pièces collector et éditions limitées offertes aux membres actifs chaque saison.</div>
         </div>
       </div>
     </div>
   </div>
-  <!-- Member Form -->
-  <div class="si" style="padding:3rem 0" id="membreForm">
-    <div style="max-width:600px;margin:0 auto">
-      <div style="text-align:center;margin-bottom:2rem">
-        <div style="font-size:.52rem;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:var(--g5);margin-bottom:.3rem">Inscription Gratuite</div>
-        <div style="font-family:'Barlow Condensed',sans-serif;font-size:2rem;font-weight:900;text-transform:uppercase;letter-spacing:.04em">Rejoindre le Club</div>
-      </div>
-      <div style="background:var(--w2);border:1px solid var(--w3);padding:2rem">
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-bottom:.8rem">
-          <div class="fg"><label>Prénom</label><input type="text" placeholder="Ton prénom"/></div>
-          <div class="fg"><label>Nom</label><input type="text" placeholder="Ton nom"/></div>
+
+  <!-- FORMULAIRE UNIQUE & INTELLIGENT -->
+  <div class="si" style="padding:4rem 0" id="membreForm">
+    <div style="max-width:720px;margin:0 auto">
+
+      <!-- Header -->
+      <div style="margin-bottom:2.8rem;text-align:center">
+        <div style="display:inline-flex;align-items:center;gap:10px;margin-bottom:1rem">
+          <div style="width:20px;height:1px;background:var(--red)"></div>
+          <span style="font-size:.48rem;font-weight:700;letter-spacing:.34em;text-transform:uppercase;color:var(--red)">Formulaire de contact</span>
+          <div style="width:20px;height:1px;background:var(--red)"></div>
         </div>
-        <div class="fg" style="margin-bottom:.8rem"><label>WhatsApp / Téléphone</label><input type="tel" placeholder="+225 07 XX XX XX XX"/></div>
-        <div class="fg" style="margin-bottom:.8rem"><label>Instagram (optionnel)</label><input type="text" placeholder="@toncompte"/></div>
-        <div class="fg" style="margin-bottom:1rem"><label>Tu es…</label>
-          <select>
-            <option>Client fidèle</option>
-            <option>Influenceur / Content creator</option>
-            <option>Créateur de mode / Designer</option>
-            <option>Responsable d'une marque</option>
-            <option>Revendeur potentiel</option>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:clamp(2rem,5vw,3.2rem);font-weight:900;text-transform:uppercase;letter-spacing:.04em;line-height:.9;margin-bottom:.8rem">Ta demande,<br/>un formulaire.</div>
+        <p style="font-size:.74rem;color:var(--g5);line-height:1.9;max-width:480px;margin:0 auto">Client, créateur, marque ou investisseur — un seul endroit. On te répond sous 24h.</p>
+      </div>
+
+      <!-- FORM CARD DARK -->
+      <div class="mf-wrap">
+
+        <!-- Tabs type -->
+        <div style="display:flex;border-bottom:1px solid rgba(255,255,255,.07);margin-bottom:1.8rem" id="typeTabs">
+          <button class="mf-tab on" id="tab-membre" onclick="setType('membre')">👤<br/>Client</button>
+          <button class="mf-tab" id="tab-createur" onclick="setType('createur')">🎨<br/>Créateur</button>
+          <button class="mf-tab" id="tab-partenariat" onclick="setType('partenariat')">🤝<br/>Marque</button>
+          <button class="mf-tab" id="tab-investisseur" onclick="setType('investisseur')">📈<br/>Investisseur</button>
+        </div>
+
+        <!-- Context badge -->
+        <div id="typeContext" style="display:flex;align-items:flex-start;gap:.9rem;margin-bottom:1.8rem;padding:.9rem 1rem;background:rgba(204,17,17,.08);border:1px solid rgba(204,17,17,.2);border-radius:2px">
+          <div style="font-size:1.3rem;line-height:1;flex-shrink:0;margin-top:2px" id="typeIcon">👤</div>
+          <div>
+            <div style="font-size:.58rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#fff;margin-bottom:.2rem" id="typeTitle">Client / Fan de Street Léger</div>
+            <div style="font-size:.66rem;color:rgba(255,255,255,.4);line-height:1.7" id="typeDesc">Rejoins le club pour accéder aux drops en avant-première et aux événements exclusifs.</div>
+          </div>
+        </div>
+
+        <!-- Champs nom/prénom -->
+        <div class="mf-grid2" style="margin-bottom:0">
+          <div class="mf-field">
+            <input class="mf-input" type="text" id="fPrenom" placeholder="Prénom"/>
+            <label class="mf-label">Prénom *</label>
+          </div>
+          <div class="mf-field">
+            <input class="mf-input" type="text" id="fNom" placeholder="Nom"/>
+            <label class="mf-label">Nom</label>
+          </div>
+        </div>
+
+        <div class="mf-divider"></div>
+
+        <!-- Contact -->
+        <div class="mf-grid2" style="margin-bottom:0">
+          <div class="mf-field">
+            <input class="mf-input" type="tel" id="fTel" placeholder="+225 07 XX XX XX"/>
+            <label class="mf-label">WhatsApp *</label>
+          </div>
+          <div class="mf-field">
+            <input class="mf-input" type="email" id="fEmail" placeholder="email@exemple.com"/>
+            <label class="mf-label">Email</label>
+          </div>
+        </div>
+
+        <div class="mf-divider"></div>
+
+        <!-- Dynamic fields -->
+        <div id="dynamicFields"></div>
+
+        <!-- Besoin -->
+        <div class="mf-field">
+          <textarea class="mf-input" id="fBesoin" placeholder="Message" rows="4"></textarea>
+          <label class="mf-label" id="fBesoinLabel">Ton besoin / message *</label>
+        </div>
+
+        <div class="mf-divider"></div>
+
+        <!-- Source -->
+        <div class="mf-field" style="margin-bottom:1.6rem">
+          <select class="mf-input" id="fSource">
+            <option value="" disabled selected>— Source —</option>
+            <option>Instagram / TikTok</option>
+            <option>Bouche à oreille</option>
+            <option>Événement / Pop-up</option>
+            <option>Via un créateur</option>
+            <option>Autre</option>
           </select>
+          <label class="mf-label" style="top:.52rem;transform:none;font-size:.46rem;letter-spacing:.2em;color:var(--red)">Comment tu as connu Street Léger</label>
         </div>
-        <button onclick="alert('Demande envoyée ! On te contacte sous 24h 🔥')" style="width:100%;padding:14px;background:var(--red);color:var(--w);font-family:'Barlow';font-size:.64rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;border:none;cursor:pointer">Envoyer ma Demande →</button>
-        <div style="text-align:center;margin-top:.8rem;font-size:.58rem;color:var(--g5)">Inscription gratuite · Réponse sous 24h</div>
+
+        <!-- Submit -->
+        <button class="mf-submit" onclick="submitMembreForm()" id="submitBtn">Envoyer ma demande →</button>
+        <div style="text-align:center;margin-top:.8rem;font-size:.54rem;color:rgba(255,255,255,.2);letter-spacing:.08em">Réponse garantie sous 24h · 100% confidentiel</div>
       </div>
     </div>
   </div>
-  <!-- Partners Section -->
-  <div style="background:var(--k);padding:3rem 0" id="partenairesSection">
+
+  <!-- SECTION TYPES DE PARTENARIAT — fond noir -->
+  <div style="background:var(--k);padding:3.5rem 0" id="partenairesSection">
     <div class="si">
-      <div style="text-align:center;margin-bottom:2.5rem">
-        <div style="font-size:.52rem;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--red);margin-bottom:.5rem">Pour les Marques</div>
-        <div style="font-family:'Barlow Condensed',sans-serif;font-size:clamp(1.8rem,4vw,3rem);font-weight:900;color:var(--w);text-transform:uppercase;letter-spacing:.04em">Partenariat Stratégique</div>
-        <p style="font-size:.74rem;color:rgba(255,255,255,.35);max-width:450px;margin:.8rem auto 0;line-height:1.8">Tu représentes une marque et tu veux toucher notre communauté underground ? Parlons co-branding, capsule commune ou activation événementielle.</p>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:2rem">
+        <div style="width:20px;height:1px;background:var(--red)"></div>
+        <span style="font-size:.5rem;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--red)">Pour les marques</span>
       </div>
-      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:1.5rem;margin-bottom:2.5rem">
-        <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);padding:1.5rem">
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:clamp(2rem,5vw,3.8rem);font-weight:900;color:var(--w);text-transform:uppercase;letter-spacing:.03em;line-height:.88;margin-bottom:2rem">Partenariat<br/>Stratégique.</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,.06);margin-bottom:2.5rem">
+        <div style="background:rgba(255,255,255,.03);padding:1.6rem">
+          <div style="font-size:.5rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--red);margin-bottom:.5rem">01</div>
           <div style="font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;font-weight:800;color:var(--w);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.6rem">Co-Branding</div>
-          <div style="font-size:.68rem;color:rgba(255,255,255,.3);line-height:1.8">Collection commune avec logo des deux marques. Diffusion dans nos deux réseaux. Story-telling partagé.</div>
+          <div style="font-size:.64rem;color:rgba(255,255,255,.3);line-height:1.9">Collection commune avec logo des deux marques. Diffusion dans nos deux réseaux. Story-telling partagé.</div>
         </div>
-        <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);padding:1.5rem">
-          <div style="font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;font-weight:800;color:var(--w);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.6rem">Activation Événement</div>
-          <div style="font-size:.68rem;color:rgba(255,255,255,.3);line-height:1.8">Présence de ta marque dans nos événements drops, pop-ups et lancements. Visibilité garantie auprès d'une audience premium.</div>
+        <div style="background:rgba(255,255,255,.03);padding:1.6rem;border-left:1px solid rgba(255,255,255,.06)">
+          <div style="font-size:.5rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--red);margin-bottom:.5rem">02</div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;font-weight:800;color:var(--w);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.6rem">Activation</div>
+          <div style="font-size:.64rem;color:rgba(255,255,255,.3);line-height:1.9">Présence à nos drops, pop-ups et événements. Visibilité auprès d'une audience premium et engagée.</div>
         </div>
-        <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);padding:1.5rem">
+        <div style="background:rgba(255,255,255,.03);padding:1.6rem;border-left:1px solid rgba(255,255,255,.06)">
+          <div style="font-size:.5rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--red);margin-bottom:.5rem">03</div>
           <div style="font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;font-weight:800;color:var(--w);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.6rem">Distribution</div>
-          <div style="font-size:.68rem;color:rgba(255,255,255,.3);line-height:1.8">Tu produis, on distribue dans notre réseau. Accès à notre base clients et notre canal WhatsApp de +2000 membres actifs.</div>
+          <div style="font-size:.64rem;color:rgba(255,255,255,.3);line-height:1.9">Tu produis, on distribue. Accès à notre réseau et notre canal WhatsApp de +2000 membres actifs.</div>
         </div>
       </div>
-      <div style="text-align:center">
-        <a href="https://wa.me/2250700000000?text=Bonjour%2C+je+représente+une+marque+et+je+souhaite+discuter+d'un+partenariat+avec+Street+Léger" target="_blank" style="background:var(--red);color:var(--w);padding:13px 40px;font-size:.64rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;display:inline-block">Discuter d'un Partenariat →</a>
-      </div>
+      <button onclick="setType('partenariat');document.getElementById('membreForm').scrollIntoView({behavior:'smooth'})" style="background:var(--red);color:var(--w);border:none;padding:13px 36px;font-family:'Barlow';font-size:.62rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;cursor:pointer;transition:opacity .2s" onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">Déposer ma demande de partenariat →</button>
     </div>
   </div>
+
 </div>
   <div class="foot-top">
     <div class="si"><div class="foot-grid">
@@ -1337,6 +1604,19 @@ const PRODS=[
   {id:22,cat:"acc",name:"Set Bagues",price:30000,old:40000,badge:"SALE",colors:["#c0c0c0","#d4af37"],sizes:["Unique"]},
   {id:23,cat:"acc",name:"Bonnet SL",price:25000,old:0,badge:"NEW",colors:["#0a0a0a","#8b0000"],sizes:["Unique"]},
   {id:24,cat:"acc",name:"Ceinture SL",price:30000,old:0,badge:"",colors:["#0a0a0a"],sizes:["Unique"]},
+  // Capsule Konan Abel — Harmattan
+  {id:101,cat:"homme",name:"Harmattan Tee",price:52000,old:0,badge:"NEW",colors:["#0a0a0a","#8b0000"],sizes:["S","M","L","XL"],creator:"konan"},
+  {id:102,cat:"homme",name:"Harmattan Hoodie",price:90000,old:0,badge:"HOT",colors:["#0a0a0a","#2a2a2a"],sizes:["S","M","L","XL"],creator:"konan"},
+  {id:103,cat:"acc",name:"Harmattan Cap",price:32000,old:0,badge:"NEW",colors:["#0a0a0a","#8b0000"],sizes:["Unique"],creator:"konan"},
+  {id:104,cat:"homme",name:"Harmattan Cargo",price:82000,old:0,badge:"",colors:["#2a2a2a"],sizes:["S","M","L","XL"],creator:"konan"},
+  // Capsule Yasmine Sorel — Rebirth (bientôt)
+  {id:201,cat:"femme",name:"Rebirth Crop",price:48000,old:0,badge:"NEW",colors:["#0a0a0a","#fff"],sizes:["XS","S","M","L"],creator:"yasmine"},
+  {id:202,cat:"femme",name:"Rebirth Maxi Dress",price:95000,old:0,badge:"HOT",colors:["#1a1a1a"],sizes:["XS","S","M"],creator:"yasmine"},
+  {id:203,cat:"acc",name:"Rebirth Collier",price:38000,old:0,badge:"",colors:["#c0c0c0","#d4af37"],sizes:["Unique"],creator:"yasmine"},
+  // Capsule Djamel M. — Kasbah (archive)
+  {id:301,cat:"homme",name:"Kasbah Jacket",price:130000,old:160000,badge:"SALE",colors:["#1a1a1a"],sizes:["M","L","XL"],creator:"djamel"},
+  {id:302,cat:"acc",name:"Kasbah Bague",price:28000,old:35000,badge:"SALE",colors:["#c0c0c0","#d4af37"],sizes:["Unique"],creator:"djamel"},
+  {id:303,cat:"homme",name:"Kasbah Tee",price:58000,old:75000,badge:"SALE",colors:["#1a1a1a","#fff"],sizes:["S","M","L","XL"],creator:"djamel"},
 ];
 const PAY_METHODS={
   orange:{label:"Paiement Orange Money",color:"#FF6600",html:`<div class="fg" style="margin-bottom:.6rem"><label>Numéro Orange Money</label><input type="tel" placeholder="+225 07 XX XX XX XX"/></div><p style="font-size:.64rem;color:var(--g5);line-height:1.7">Vous recevrez un code de confirmation par SMS sur votre téléphone Orange.</p>`},
@@ -1733,6 +2013,215 @@ function closeProdModal(e){
   document.body.style.overflow="";
 }
 
+// ===== CREATOR PROFILES =====
+const CREATORS={
+  konan:{
+    id:"konan",
+    name:"Konan Abel",
+    initials:"KA",
+    style:"Streetwear · Graphique",
+    ville:"Abidjan, CI",
+    status:{label:"LIVE",bg:"var(--red)",color:"var(--w)"},
+    bio:"Autodidacte depuis l'âge de 16 ans, Konan Abel transforme la rue en atelier. Ses pièces portent la mémoire visuelle d'Abidjan — ses murs tagués, ses marchés, son chaos magnifique. Il coud ses propres patchs, imprime ses propres graphiques, et ne fait jamais deux fois la même chose.",
+    quote:"La rue m'a tout appris. Je la porte sur moi.",
+    tags:["Streetwear","Sérigraphie","Patchwork","Abidjan","Underground"],
+    capsule:"Capsule Harmattan",
+    capsuleLabel:"Collection Live · SS25",
+    season:"SS25",
+    capsuleBadge:{label:"🔥 DISPONIBLE",bg:"var(--red)"},
+    banner:"https://images.unsplash.com/photo-1529139574466-a303027c1d8b?w=1400&q=85",
+    stats:[{label:"Pièces",value:"4"},{label:"Capsules",value:"1"},{label:"Abidjan",value:"🇨🇮"}],
+    alsoCat:"homme",
+    alsoCatLabel:"Streetwear Homme",
+  },
+  yasmine:{
+    id:"yasmine",
+    name:"Yasmine Sorel",
+    initials:"YS",
+    style:"Fashion · Upcycling de Luxe",
+    ville:"Abidjan / Paris",
+    status:{label:"BIENTÔT",bg:"rgba(255,255,255,.1)",color:"var(--w)"},
+    bio:"Yasmine Sorel récupère des matières premium abandonnées et les reconstruit en pièces uniques à la main. Formée à Paris, revenue à Abidjan, elle mélange les codes du luxe occidental et l'esthétique africaine contemporaine. Chaque vêtement est numéroté, jamais dupliqué.",
+    quote:"Je ne crée pas des vêtements. Je crée des objets qui survivent à la mode.",
+    tags:["Upcycling","Haute Couture","Unique","Fait main","Abidjan x Paris"],
+    capsule:"Capsule Rebirth",
+    capsuleLabel:"Pré-lancement · En cours",
+    season:"FW25",
+    capsuleBadge:{label:"✨ PRÉ-LANCEMENT",bg:"var(--k)"},
+    banner:"https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=1400&q=85",
+    stats:[{label:"Pièces",value:"3"},{label:"Capsules",value:"1"},{label:"Abidjan",value:"🇨🇮"}],
+    alsoCat:"femme",
+    alsoCatLabel:"Collection Femme",
+  },
+  djamel:{
+    id:"djamel",
+    name:"Djamel M.",
+    initials:"DM",
+    style:"Wearable Art · Broderie",
+    ville:"Alger / Abidjan",
+    status:{label:"ARCHIVE",bg:"rgba(255,255,255,.06)",color:"rgba(255,255,255,.55)"},
+    bio:"Djamel M. brodait des façades de la Casbah d'Alger avant de s'attaquer aux vêtements. Ses fils racontent des architectures, des mosaïques, des fractures. Sa capsule Kasbah — conçue en résidence à Abidjan — est désormais une édition collector définitive. Pièces rares. Jamais réimprimées.",
+    quote:"Un vêtement doit raconter quelque chose que les mots ne peuvent pas dire.",
+    tags:["Broderie","Wearable Art","Collector","Alger","Fait main"],
+    capsule:"Capsule Kasbah",
+    capsuleLabel:"Archive Collector · Édition Définitive",
+    season:"AW24",
+    capsuleBadge:{label:"🏺 COLLECTOR",bg:"rgba(15,15,15,.95)"},
+    banner:"https://images.unsplash.com/photo-1578587018452-892bacefd3f2?w=1400&q=85",
+    stats:[{label:"Pièces",value:"3"},{label:"Capsules",value:"1"},{label:"Alger",value:"🇩🇿"}],
+    alsoCat:"acc",
+    alsoCatLabel:"Accessoires Collector",
+  }
+};
+
+function openCreator(cid){
+  const c=CREATORS[cid];if(!c)return;
+  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+  document.getElementById("page-creator-profile").classList.add("active");
+  document.querySelectorAll(".nav-links a").forEach(a=>a.classList.remove("on"));
+  document.getElementById("nl-creators").classList.add("on");
+  window.scrollTo({top:0,behavior:"instant"});
+
+  // Hero banner — fade in
+  const banner=document.getElementById("cpBanner");
+  banner.style.opacity="0";
+  banner.src=""; banner.src=c.banner;
+  banner.onload=()=>{banner.style.opacity=".38";};
+  // Hero text
+  document.getElementById("cpStatusHero").innerHTML=`<span style="font-size:.46rem;font-weight:900;letter-spacing:.16em;text-transform:uppercase;padding:5px 12px;background:${c.status.bg};color:${c.status.color}">${c.status.label}</span>`;
+  document.getElementById("cpCapsuleTagHero").textContent=c.capsule;
+  document.getElementById("cpName").textContent=c.name;
+  document.getElementById("cpStyle").textContent=c.style;
+  document.getElementById("cpVille").textContent=c.ville;
+  // Stats
+  document.getElementById("cpStatItems").innerHTML=c.stats.map(s=>`<div><div style="font-family:'Barlow Condensed',sans-serif;font-size:2rem;font-weight:900;color:var(--w);line-height:1">${s.value}</div><div style="font-size:.46rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.28)">${s.label}</div></div>`).join("");
+
+  // Bio section
+  document.getElementById("cpNameBio").textContent=c.name;
+  document.getElementById("cpBio").textContent=c.bio;
+  document.getElementById("cpTags").innerHTML=c.tags.map(t=>`<span class="cp-tag">${t}</span>`).join("");
+  document.getElementById("cpQuote").textContent=`« ${c.quote} »`;
+
+  // Capsule info
+  document.getElementById("cpCapsuleName").textContent=c.capsule;
+  document.getElementById("cpCapsuleLabel").textContent=c.capsuleLabel;
+  document.getElementById("cpCapsuleBadge").innerHTML=`<span style="font-size:.5rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:5px 13px;background:${c.capsuleBadge.bg};color:var(--w)">${c.capsuleBadge.label}</span>`;
+  document.getElementById("cpCapsuleTitle2").textContent=c.capsule;
+
+  // Products
+  const cProds=PRODS.filter(p=>p.creator===cid);
+  document.getElementById("cpPieceCount").textContent=cProds.length+"";
+  document.getElementById("cpPieceCountSmall").textContent=cProds.length+"";
+  document.getElementById("cpSeasonVal").textContent=c.season;
+
+  // Preview galerie 2×2 — prend les 4 premières images
+  const previewProds=cProds.slice(0,4);
+  document.getElementById("cpPreviewImgs").innerHTML=previewProds.map((p,i)=>`<div style="overflow:hidden;background:var(--w3);${i===0?"grid-row:span 2;grid-column:span 1":""};aspect-ratio:${i===0?"auto":"1"}"><img src="${IMGS[p.id]||""}" style="width:100%;height:100%;object-fit:cover;display:block" onerror="this.style.display='none'"/></div>`).join("")+
+    (previewProds.length<2?Array(4-previewProds.length).fill(`<div style="background:var(--w3);aspect-ratio:1"></div>`).join(""):"");
+
+  // Marquee créateur
+  const mq=document.getElementById("cpMarquee");
+  const txt=`${c.name} · ${c.capsule} · Street Léger · `;
+  mq.innerHTML=txt.repeat(8).split("").map((ch,i)=>ch==="·"?`<span style="color:var(--red);margin:0 1rem;font-size:.6rem">✦</span>`:`<span style="font-size:.54rem;font-weight:700;letter-spacing:.18em;color:rgba(255,255,255,.25);text-transform:uppercase">${ch}</span>`).join("");
+
+  // Products grid (on dark)
+  document.getElementById("cpProdGrid").innerHTML=cProds.length?cProds.map(pcHTML).join(""):`<p style="color:rgba(255,255,255,.3);font-size:.76rem;padding:2rem 0">Produits en cours d'ajout…</p>`;
+
+  // Galerie scroll horizontale — même images des produits de la capsule en plus grand
+  const gallery=document.getElementById("cpScrollGallery");
+  const galleryImgs=cProds.map(p=>[IMGS[p.id],PROD_IMGS[p.id]?.[1],PROD_IMGS[p.id]?.[2]]).flat().filter(Boolean);
+  gallery.innerHTML=galleryImgs.map(src=>`<div style="flex-shrink:0;width:clamp(200px,28vw,340px);aspect-ratio:.75;overflow:hidden;background:var(--k)"><img src="${src}" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'"/></div>`).join("");
+
+  // Also
+  document.getElementById("cpAlsoCat").textContent=c.alsoCatLabel;
+  const alsoProds=PRODS.filter(p=>p.cat===c.alsoCat&&!p.creator).slice(0,4);
+  document.getElementById("cpAlsoGrid").innerHTML=alsoProds.map(pcHTML).join("");
+  document.getElementById("cpAlsoBtn").onclick=()=>showCat(c.alsoCat);
+
+  updateWishUI();
+}
+function wishCreator(){
+  // simple feedback
+  const btn=document.getElementById("cpWishCreator");
+  const on=btn.style.color==="var(--red)";
+  btn.style.color=on?"var(--w)":"var(--red)";
+  btn.style.background=on?"rgba(255,255,255,.08)":"rgba(204,17,17,.15)";
+  toast(on?"Retiré de ta wishlist":"Créateur ajouté à ta wishlist ♥");
+}
+
+// ===== MEMBRES FORM =====
+const FORM_TYPES={
+  membre:{icon:"👤",title:"Client / Fan de Street Léger",desc:"Rejoins le club pour accéder aux drops en avant-première et aux événements exclusifs.",fields:`
+    <div class="mf-grid2" style="margin-bottom:0">
+      <div class="mf-field"><input class="mf-input" type="text" id="fInsta" placeholder="Instagram"/><label class="mf-label">Instagram (optionnel)</label></div>
+      <div class="mf-field"><input class="mf-input" type="text" id="fVille" placeholder="Ville"/><label class="mf-label">Ville</label></div>
+    </div>
+    <div class="mf-divider"></div>`},
+  createur:{icon:"🎨",title:"Créateur de mode / Designer",desc:"Soumets ton portfolio et discutons d'une collaboration ou capsule exclusive.",fields:`
+    <div class="mf-field"><input class="mf-input" type="text" id="fStyle" placeholder="style"/><label class="mf-label">Ton style / discipline *</label></div>
+    <div class="mf-field"><input class="mf-input" type="text" id="fPortfolio" placeholder="portfolio"/><label class="mf-label">Lien portfolio / Instagram *</label></div>
+    <div class="mf-field">
+      <select class="mf-input" id="fPieces"><option value="" disabled selected></option><option>Moins de 10 pièces</option><option>10 à 30 pièces</option><option>Plus de 30 pièces</option><option>Collection complète</option></select>
+      <label class="mf-label" style="top:.52rem;transform:none;font-size:.46rem;letter-spacing:.2em;color:var(--red)">Nombre de pièces créées</label>
+    </div>
+    <div class="mf-divider"></div>`},
+  partenariat:{icon:"🤝",title:"Marque / Partenariat stratégique",desc:"Co-branding, activation événementielle ou distribution — dis-nous ce que tu cherches.",fields:`
+    <div class="mf-field"><input class="mf-input" type="text" id="fMarque" placeholder="Marque"/><label class="mf-label">Nom de la marque *</label></div>
+    <div class="mf-field"><input class="mf-input" type="text" id="fSiteMarque" placeholder="site"/><label class="mf-label">Site web / Instagram</label></div>
+    <div class="mf-grid2" style="margin-bottom:0">
+      <div class="mf-field">
+        <select class="mf-input" id="fSecteur"><option value="" disabled selected></option><option>Mode / Streetwear</option><option>Beauté / Cosmétiques</option><option>Musique / Entertainment</option><option>Food & Lifestyle</option><option>Tech / Télécoms</option><option>Autre</option></select>
+        <label class="mf-label" style="top:.52rem;transform:none;font-size:.46rem;letter-spacing:.2em;color:var(--red)">Secteur d'activité</label>
+      </div>
+      <div class="mf-field">
+        <select class="mf-input" id="fTypePart"><option value="" disabled selected></option><option>Co-Branding / Capsule</option><option>Activation Événement</option><option>Distribution</option><option>Sponsoring</option><option>Autre</option></select>
+        <label class="mf-label" style="top:.52rem;transform:none;font-size:.46rem;letter-spacing:.2em;color:var(--red)">Type de partenariat</label>
+      </div>
+    </div>
+    <div class="mf-divider"></div>`},
+  investisseur:{icon:"📈",title:"Investisseur / Business Angel",desc:"Tu veux accompagner la croissance de Street Léger. Parle-nous de ton profil.",fields:`
+    <div class="mf-field">
+      <select class="mf-input" id="fProfil"><option value="" disabled selected></option><option>Business Angel individuel</option><option>Fonds d'investissement</option><option>Accélérateur / Incubateur</option><option>Autre</option></select>
+      <label class="mf-label" style="top:.52rem;transform:none;font-size:.46rem;letter-spacing:.2em;color:var(--red)">Profil d'investissement</label>
+    </div>
+    <div class="mf-field"><input class="mf-input" type="text" id="fSectors" placeholder="secteurs"/><label class="mf-label">Secteurs d'intérêt</label></div>
+    <div class="mf-divider"></div>`}
+};
+let currentType='membre';
+function setType(t){
+  currentType=t;
+  document.querySelectorAll('.mf-tab').forEach(b=>b.classList.remove('on'));
+  const tb=document.getElementById('tab-'+t);
+  if(tb) tb.classList.add('on');
+  const ft=FORM_TYPES[t];
+  document.getElementById('typeIcon').textContent=ft.icon;
+  document.getElementById('typeTitle').textContent=ft.title;
+  document.getElementById('typeDesc').textContent=ft.desc;
+  document.getElementById('dynamicFields').innerHTML=ft.fields;
+  document.getElementById('fBesoinLabel').textContent=t==='createur'?'Ton projet / ta vision *':t==='partenariat'?'Le partenariat que tu envisages *':t==='investisseur'?'Ton message / tes questions *':'Ton besoin / message *';
+}
+function submitMembreForm(){
+  const prenom=document.getElementById('fPrenom').value.trim();
+  const tel=document.getElementById('fTel').value.trim();
+  const besoin=document.getElementById('fBesoin').value.trim();
+  if(!prenom||!tel||!besoin){toast('Remplis les champs obligatoires (*)');return;}
+  const btn=document.getElementById('submitBtn');
+  btn.textContent='⏳ Envoi en cours…';btn.style.background='var(--g5)';
+  // Simule envoi (WhatsApp fallback)
+  setTimeout(()=>{
+    const nom=document.getElementById('fNom').value.trim();
+    const email=document.getElementById('fEmail').value.trim();
+    const source=document.getElementById('fSource').value;
+    const ft=FORM_TYPES[currentType];
+    const msg=`[${ft.icon} ${ft.title}]%0ANom: ${prenom} ${nom}%0ATél: ${tel}${email?'%0AEmail: '+email:''}%0A%0ABesoin: ${besoin}${source?'%0ASource: '+source:''}`;
+    window.open(`https://wa.me/2250700000000?text=${msg}`,'_blank');
+    btn.textContent='✓ Demande envoyée !';btn.style.background='#22c55e';
+    setTimeout(()=>{btn.textContent='Envoyer ma Demande →';btn.style.background='var(--k)';},3000);
+    toast('Demande envoyée ! On te répond sous 24h 🔥');
+  },800);
+}
+// init
+setType('membre');
 renderHome();updateCartUI();updateWishUI();
 // Countdown timer
 (function(){
