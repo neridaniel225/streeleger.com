@@ -814,12 +814,12 @@ select.mf-input option{background:#111;color:#fff}
       <div class="cko-sec">
         <div class="cko-sec-t">Adresse de Livraison</div>
         <div class="cko-grid">
-          <div class="fg"><label>Prénom</label><input type="text" placeholder="Votre prénom"/></div>
-          <div class="fg"><label>Nom</label><input type="text" placeholder="Votre nom"/></div>
-          <div class="fg ff"><label>Adresse complète</label><input type="text" placeholder="Rue, quartier, commune..."/></div>
-          <div class="fg"><label>Ville</label><input type="text" placeholder="Abidjan"/></div>
-          <div class="fg"><label>Pays</label><select><option>Côte d'Ivoire</option><option>Sénégal</option><option>Mali</option><option>Burkina Faso</option><option>Guinée</option><option>Ghana</option><option>France</option></select></div>
-          <div class="fg ff"><label>Téléphone</label><input type="tel" placeholder="+225 07 XX XX XX XX"/></div>
+          <div class="fg"><label>Prénom</label><input type="text" id="ckPrenom" placeholder="Votre prénom"/></div>
+          <div class="fg"><label>Nom</label><input type="text" id="ckNom" placeholder="Votre nom"/></div>
+          <div class="fg ff"><label>Adresse complète</label><input type="text" id="ckAdresse" placeholder="Rue, quartier, commune..."/></div>
+          <div class="fg"><label>Ville / Commune</label><input type="text" id="ckVille" placeholder="Ex: Cocody, Plateau, Yopougon…"/></div>
+          <div class="fg"><label>Pays</label><select id="ckPays"><option>Côte d'Ivoire</option><option>Sénégal</option><option>Mali</option><option>Burkina Faso</option><option>Guinée</option><option>Ghana</option><option>France</option></select></div>
+          <div class="fg ff"><label>Téléphone WhatsApp</label><input type="tel" id="ckTel" placeholder="+225 07 XX XX XX XX"/></div>
         </div>
       </div>
       <div class="cko-sec">
@@ -1023,6 +1023,7 @@ select.mf-input option{background:#111;color:#fff}
             <div style="background:#FF6600;color:var(--w);font-size:.5rem;font-weight:800;padding:4px 10px;letter-spacing:.08em;white-space:nowrap">Orange Money</div>
             <div style="background:#FFCC00;color:var(--k);font-size:.5rem;font-weight:800;padding:4px 10px;letter-spacing:.08em;white-space:nowrap">MTN MoMo</div>
             <div style="background:#0088cc;color:var(--w);font-size:.5rem;font-weight:800;padding:4px 10px;letter-spacing:.08em;white-space:nowrap">Moov Money</div>
+            <div style="background:#1A56DB;color:var(--w);font-size:.5rem;font-weight:800;padding:4px 10px;letter-spacing:.08em;white-space:nowrap">Wave</div>
             <div style="background:var(--k);color:var(--w);font-size:.5rem;font-weight:800;padding:4px 10px;letter-spacing:.08em;white-space:nowrap">Cash</div>
           </div>
         </div>
@@ -1853,8 +1854,54 @@ function renderRecap(){
   ["del-recap","pay-recap"].forEach(id=>{const el=document.getElementById(id);if(!el)return;el.innerHTML=`<div class="recap-hd">Votre commande <span class="recap-free">LIVRAISON OFFERTE</span></div>${html}${foot}`;});
 }
 function placeOrder(){
-  const id="#SL-"+Math.random().toString(36).substr(2,6).toUpperCase();
-  document.getElementById("confirmId").textContent=id;
+  const orderId="#SL-"+Math.random().toString(36).substr(2,6).toUpperCase();
+  document.getElementById("confirmId").textContent=orderId;
+
+  // Collect delivery info from checkout form
+  const prenom=(document.getElementById('ckPrenom')||{}).value||'';
+  const nom=(document.getElementById('ckNom')||{}).value||'';
+  const adresse=(document.getElementById('ckAdresse')||{}).value||'';
+  const ville=(document.getElementById('ckVille')||{}).value||'Abidjan';
+  const pays=(document.getElementById('ckPays')||{}).value||'Côte d\'Ivoire';
+  const tel=(document.getElementById('ckTel')||{}).value||'';
+  const clientName=(prenom+' '+nom).trim()||'Client';
+
+  // Build order object
+  const produits=cart.map(c=>`${c.name} (${c.size||'?'}) x${c.qty}`).join(', ');
+  const total=cart.reduce((a,c)=>a+c.price*c.qty,0);
+  const payEl=document.querySelector('#page-checkout-payment .pay-icon-card.on .cko-pay-label');
+  const payment=payEl?payEl.textContent:'—';
+
+  const order={
+    id:orderId,date:new Date().toISOString().split('T')[0],
+    client:clientName,phone:tel,
+    products:produits,
+    adresse:`${adresse}, ${ville}, ${pays}`,
+    total,payment,status:'confirmed',notes:'',fourn:'',
+  };
+
+  // Save to shared localStorage (admin reads sl3_orders)
+  try{
+    const orders=JSON.parse(localStorage.getItem('sl3_orders')||'[]');
+    orders.unshift(order);
+    localStorage.setItem('sl3_orders',JSON.stringify(orders));
+  }catch(e){}
+
+  // Auto-send WA to admin with full order details
+  const adminMsg=
+    `🛒 *NOUVELLE COMMANDE ${orderId}*\n\n`+
+    `👤 Client : ${clientName}\n`+
+    `📞 WhatsApp : ${tel||'non renseigné'}\n\n`+
+    `📦 Produits : ${produits}\n`+
+    `💰 Total : ${total.toLocaleString('fr-FR')} FCFA\n`+
+    `💳 Paiement : ${payment}\n\n`+
+    `📍 *Adresse de livraison :*\n${adresse}\n${ville}, ${pays}`;
+
+  // Send to admin WA (Street Léger principal)
+  setTimeout(()=>{
+    window.open(`https://wa.me/2250700000000?text=${encodeURIComponent(adminMsg)}`,'_blank');
+  },500);
+
   cart=[];saveCart();updateCartUI();nav("confirm");
 }
 
@@ -2207,13 +2254,45 @@ function submitMembreForm(){
   if(!prenom||!tel||!besoin){toast('Remplis les champs obligatoires (*)');return;}
   const btn=document.getElementById('submitBtn');
   btn.textContent='⏳ Envoi en cours…';btn.style.background='var(--g5)';
-  // Simule envoi (WhatsApp fallback)
   setTimeout(()=>{
     const nom=document.getElementById('fNom').value.trim();
     const email=document.getElementById('fEmail').value.trim();
     const source=document.getElementById('fSource').value;
     const ft=FORM_TYPES[currentType];
-    const msg=`[${ft.icon} ${ft.title}]%0ANom: ${prenom} ${nom}%0ATél: ${tel}${email?'%0AEmail: '+email:''}%0A%0ABesoin: ${besoin}${source?'%0ASource: '+source:''}`;
+    // Collect all dynamic fields
+    const extras={};
+    ['fStyle','fPortfolio','fPieces','fMarque','fSiteMarque','fSecteur','fTypePart','fProfil','fSectors','fInsta','fVille'].forEach(id=>{
+      const el=document.getElementById(id);if(el&&el.value)extras[id.replace('f','')]=el.value;
+    });
+    // Build member object
+    const member={
+      id:'M'+Date.now(),
+      name:(prenom+' '+nom).trim(),
+      status:currentType==='membre'?'fan':currentType==='createur'?'createur':currentType==='partenariat'?'partenaire':'investisseur',
+      phone:tel,email,
+      brand:extras.Marque||extras.Style||'',
+      ville:extras.Ville||'',
+      instagram:extras.Insta||extras.Portfolio||'',
+      portfolio:extras.Portfolio||'',
+      source,besoin,
+      orders:0,date:new Date().toISOString().split('T')[0],
+      _ks:'new',notes:'Via formulaire site',
+      extra:extras
+    };
+    // Save to shared localStorage (sl3_members = same key as admin)
+    try{
+      const existing=JSON.parse(localStorage.getItem('sl3_members')||'[]');
+      existing.unshift(member);
+      localStorage.setItem('sl3_members',JSON.stringify(existing));
+    }catch(e){}
+    // Also save to sl_pending for badge
+    try{
+      const pend=JSON.parse(localStorage.getItem('sl_pending_members')||'[]');
+      pend.unshift(member);
+      localStorage.setItem('sl_pending_members',JSON.stringify(pend));
+    }catch(e){}
+    // WA fallback
+    const msg=`[${ft.icon} ${ft.title}]%0ANom: ${prenom} ${nom}%0ATél: ${tel}${email?'%0AEmail: '+email:''}%0ABesoin: ${besoin}${source?'%0ASource: '+source:''}`;
     window.open(`https://wa.me/2250700000000?text=${msg}`,'_blank');
     btn.textContent='✓ Demande envoyée !';btn.style.background='#22c55e';
     setTimeout(()=>{btn.textContent='Envoyer ma Demande →';btn.style.background='var(--k)';},3000);
